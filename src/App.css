@@ -1,0 +1,159 @@
+.page-shell {
+  min-height: 100svh;
+  color: #f7f7fb;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.08), transparent 2px),
+    radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.1), transparent 1px),
+    radial-gradient(circle at 88% 68%, rgba(255, 255, 255, 0.08), transparent 2px),
+    #000;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 26px 0;
+}
+
+.brand {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.planet-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.nav-pill {
+  --planet-color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1.5px solid var(--planet-color);
+  border-radius: 999px;
+  color: #f7f7fb;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.nav-pill:hover {
+  background: color-mix(in srgb, var(--planet-color) 14%, transparent);
+
+  transform: translateY(-1px);
+}
+
+.nav-pill:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.nav-pill--mercury {
+  --planet-color: #b8b1a7;
+}
+
+.nav-pill--venus {
+  --planet-color: #e7c27d;
+}
+
+.nav-pill--earth {
+  --planet-color: #3f8cff;
+}
+
+.nav-pill--mars {
+  --planet-color: #d85a3a;
+}
+
+.nav-pill--jupiter {
+  --planet-color: #d1a06a;
+}
+
+.nav-pill--saturn {
+  --planet-color: #ead08a;
+}
+
+.nav-pill--uranus {
+  --planet-color: #7de3e3;
+}
+
+.nav-pill--neptune {
+  --planet-color: #5578ff;
+}
+
+.hero-stage {
+  display: grid;
+  align-content: center;
+  width: min(1180px, calc(100% - 40px));
+  min-height: calc(100svh - 104px);
+  margin: 0 auto;
+  padding: 64px 0 96px;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  color: #b7bac8;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-stage h1 {
+  max-width: 780px;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(48px, 8vw, 104px);
+  line-height: 0.94;
+}
+
+.intro {
+  max-width: 620px;
+  margin: 28px 0 0;
+  color: #c7c9d4;
+  font-size: 20px;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    width: min(100% - 28px, 1180px);
+  }
+
+  .planet-nav {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .nav-pill {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 130px;
+  }
+
+  .hero-stage {
+    width: min(100% - 28px, 1180px);
+    min-height: auto;
+    padding: 72px 0;
+  }
+
+  .intro {
+    font-size: 17px;
+  }
+}
