@@ -9,14 +9,15 @@ import Aussbildung from './pages/Aussbildung'
 import Zeugnisse from './pages/Zeugnisse'
 import CV from './pages/CV'
 import Kontakt from './pages/Kontakt'
+import ParticlesWrapper from './components/ParticlesWrapper'
 
 
 function Home() {
   return (
-    <main className="hero-stage">
-      <p className="eyebrow">Portfolio in Aufbau</p>
-      <h1>Raum fuer deine Bewerbung.</h1>
-    </main>
+      <main className="hero-stage">
+        <p className="eyebrow">Portfolio in Aufbau</p>
+        <h1>Raum fuer deine Bewerbung.</h1>
+      </main>
   )
 }
 
@@ -24,6 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="page-shell">
+        <ParticlesWrapper>
         <header className="site-header">
           <Link className="brand" to="/">
             Bewerbungsseite
@@ -33,22 +35,22 @@ function App() {
             <Link className="nav-pill nav-pill--mercury" to="/profil">
               Profil
             </Link>
-            <Link className="nav-pill nav-pill--venus" to="/Skills">
+            <Link className="nav-pill nav-pill--venus" to="/skills">
               Skills
             </Link>
-            <Link className="nav-pill nav-pill--earth" to="/Erfahrungen">
+            <Link className="nav-pill nav-pill--earth" to="/erfahrungen">
               Erfahrungen
             </Link>
-            <Link className="nav-pill nav-pill--mars" to="/Projekte">
+            <Link className="nav-pill nav-pill--mars" to="/projekte">
               Projekte
             </Link>
-            <Link className="nav-pill nav-pill--jupiter" to="/Aussbildung">
+            <Link className="nav-pill nav-pill--jupiter" to="/aussbildung">
               Aussbildung
             </Link>
-            <Link className="nav-pill nav-pill--saturn" to="/Kontakt">
+            <Link className="nav-pill nav-pill--saturn" to="/kontakt">
               Kontakt
             </Link>
-            <Link className="nav-pill nav-pill--uranus" to="/Zeugnisse">
+            <Link className="nav-pill nav-pill--uranus" to="/zeugnisse">
               Zeugnisse
             </Link>
             <Link className="nav-pill nav-pill--neptune" to="/CV">
@@ -62,12 +64,13 @@ function App() {
           <Route path="/profil" element={<Profil />} />
           <Route path="/skills" element={<Skills />} />        
           <Route path="/erfahrungen" element={<Erfahrungen />} />   
-          <Route path="projekte" element={<Projekte />} />
+          <Route path="/projekte" element={<Projekte />} />
           <Route path="/aussbildung" element={<Aussbildung />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/zeugnisse" element={<Zeugnisse />} />
           <Route path="/CV" element={<CV />} />
         </Routes>
+        </ParticlesWrapper>
       </div>
     </BrowserRouter>
   )
