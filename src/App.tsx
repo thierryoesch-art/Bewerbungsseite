@@ -33,28 +33,44 @@ function App() {
 
           <nav className="planet-nav">
             <Link className="nav-pill nav-pill--mercury" to="/profil">
+            <span className="nav-pill__label">
               Profil
+            </span>
             </Link>
             <Link className="nav-pill nav-pill--venus" to="/skills">
+            <span className="nav-pill__label">
               Skills
+            </span>
             </Link>
             <Link className="nav-pill nav-pill--earth" to="/erfahrungen">
+            <span className="nav-pill__label">
               Erfahrungen
+            </span>
             </Link>
             <Link className="nav-pill nav-pill--mars" to="/projekte">
+            <span className="nav-pill__label">
               Projekte
+            </span>
             </Link>
             <Link className="nav-pill nav-pill--jupiter" to="/aussbildung">
-              Aussbildung
+            <span className="nav-pill__label">
+              Aussblindung
+            </span>
             </Link>
             <Link className="nav-pill nav-pill--saturn" to="/kontakt">
-              Kontakt
+            <span className="nav-pill__label">
+              Konntakt
+            </span>
             </Link>
             <Link className="nav-pill nav-pill--uranus" to="/zeugnisse">
+            <span className="nav-pill__label">
               Zeugnisse
+            </span>
             </Link>
             <Link className="nav-pill nav-pill--neptune" to="/CV">
+            <span className="nav-pill__label">
               CV
+            </span>
             </Link>
           </nav>
         </header>

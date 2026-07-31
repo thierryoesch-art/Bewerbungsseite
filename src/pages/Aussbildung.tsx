@@ -2,8 +2,8 @@
 function Aussbildung() {
   return (
       <main>
-        <h1>Aussbildung</h1>
-        <p>hier ist meine Aussbildung</p>
+        <h1>Ausbildung</h1>
+        <p>hier ist meine Ausbildung</p>
       </main>
   )
 }
