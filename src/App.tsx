@@ -3,12 +3,12 @@ import './App.css'
 
 import Profil from './pages/Profil'
 import Skills from './pages/Skills'
-import Erfahrungen from './pages/Erfahrungen'
+import Interessen from './pages/Interessen'
 import Projekte from './pages/Projekte'
-import Aussbildung from './pages/Aussbildung'
-import Zeugnisse from './pages/Zeugnisse'
-import CV from './pages/CV'
-import Kontakt from './pages/Kontakt'
+import Ausbildung from './pages/Ausbildung'
+import Einstellungen from './pages/Einstellungen'
+import Login from './pages/Login'
+import Dokumente from './pages/Dokumente'
 import ParticlesWrapper from './components/ParticlesWrapper'
 
 
@@ -24,11 +24,16 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
-      <div className="page-shell">
+      <div className="page-shell">  
         <ParticlesWrapper>
         <header className="site-header">
           <Link className="brand" to="/">
-            Bewerbungsseite
+            <span className='brand__sun' aria-hidden="true">
+            </span>
+            <span className='brand__label'>
+              Thierry Oesch
+            </span>
+            
           </Link>
 
           <nav className="planet-nav">
@@ -42,9 +47,9 @@ function App() {
               Skills
             </span>
             </Link>
-            <Link className="nav-pill nav-pill--earth" to="/erfahrungen">
+            <Link className="nav-pill nav-pill--earth" to="/interessen">
             <span className="nav-pill__label">
-              Erfahrungen
+              Interessen
             </span>
             </Link>
             <Link className="nav-pill nav-pill--mars" to="/projekte">
@@ -52,24 +57,24 @@ function App() {
               Projekte
             </span>
             </Link>
-            <Link className="nav-pill nav-pill--jupiter" to="/aussbildung">
+            <Link className="nav-pill nav-pill--jupiter" to="/ausbildung">
             <span className="nav-pill__label">
-              Aussblindung
+              Ausbildung
             </span>
             </Link>
-            <Link className="nav-pill nav-pill--saturn" to="/kontakt">
+            <Link className="nav-pill nav-pill--saturn" to="/dokumente">
             <span className="nav-pill__label">
-              Konntakt
+              Dokumente
             </span>
             </Link>
-            <Link className="nav-pill nav-pill--uranus" to="/zeugnisse">
+            <Link className="nav-pill nav-pill--uranus" to="/einstellungen">
             <span className="nav-pill__label">
-              Zeugnisse
+              Einstellungen
             </span>
             </Link>
-            <Link className="nav-pill nav-pill--neptune" to="/CV">
+            <Link className="nav-pill nav-pill--neptune" to="/login">
             <span className="nav-pill__label">
-              CV
+              Login
             </span>
             </Link>
           </nav>
@@ -79,12 +84,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/skills" element={<Skills />} />        
-          <Route path="/erfahrungen" element={<Erfahrungen />} />   
+          <Route path="/interessen" element={<Interessen />} />
           <Route path="/projekte" element={<Projekte />} />
-          <Route path="/aussbildung" element={<Aussbildung />} />
-          <Route path="/kontakt" element={<Kontakt />} />
-          <Route path="/zeugnisse" element={<Zeugnisse />} />
-          <Route path="/CV" element={<CV />} />
+          <Route path="/ausbildung" element={<Ausbildung />} />
+          <Route path="/dokumente" element={<Dokumente />} />
+          <Route path="/einstellungen" element={<Einstellungen />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         </ParticlesWrapper>
       </div>

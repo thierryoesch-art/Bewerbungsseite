@@ -19,11 +19,36 @@
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
   color: #fff;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.brand__sun {
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle closest-side at 50% 50%,
+    #f4f6b9,
+    #ead08a 30%,
+    #f5c645 60%,
+    #ee9f28 100%
+  );
+  box-shadow: 
+    0px 0px 15px #ee9f28, 
+    0px 0px 30px #ee9f28, 
+    0px 0px 60px #ee9f28;
+  flex-shrink: 0;
+}
+
+.brand__label {
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .planet-nav {
@@ -109,7 +134,7 @@
 
 .nav-pill--earth {
   --planet-color: #3f8cff;
-  --w: 120px;
+  --w: 110px;
   background-image: url('./assets/erde.jpg');
 }
 
@@ -127,7 +152,7 @@
 
 .nav-pill--saturn {
   --planet-color: #ead08a;
-  --w: 95px;
+  --w: 115px;
   background-image: url('./assets/saturn.png');
   position: relative;
 }
@@ -141,7 +166,7 @@
   width: 58px;
   height: 22px;
   transform: translate(-50%, -50%) rotate(-18deg);
-  border: 8px solid color-mix(in srgb, #7e5a31 80%, #fff);
+  border: 8px solid color-mix(in srgb, #6d6154 80%, #fff);
   border-radius: 50%;
   pointer-events: none;
   transition: opacity 60ms ease;
@@ -169,12 +194,12 @@
 
 .nav-pill--uranus {
   --planet-color: #7de3e3;
-  --w: 100px;
+  --w: 125px;
 }
 
 .nav-pill--neptune {
   --planet-color: #5578ff;
-  --w:44px;
+  --w: 80px;
   background-image: url('./assets/neptun.jpg');
 }
 

@@ -1,5 +1,5 @@
 
-function Aussbildung() {
+function Ausbildung() {
   return (
       <main>
         <h1>Ausbildung</h1>
@@ -8,4 +8,4 @@ function Aussbildung() {
   )
 }
 
-export default Aussbildung
+export default Ausbildung
