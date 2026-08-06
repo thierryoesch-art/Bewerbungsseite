@@ -15,10 +15,32 @@ import ParticlesWrapper from './components/ParticlesWrapper'
 function Home() {
   return (
       <main className="hero-stage">
-        <p className="eyebrow">Portfolio in Aufbau</p>
-        <h1>Raum fuer deine Bewerbung.</h1>
+        <p className="eyebrow">Thierry Oesch's Bewerbungseite</p>
+        <h1>Herzlich Willkommen</h1>
+        <p>Mein Name ist Thierry Oesch, 
+          3. Lehrjahr als Informatiker EFZ Applikationsentwickler
+        </p>
+        <h3>Viel Spass!</h3>
+        <div className='home-grid'>
+          <Link className="home-box home-box--profil" to="/profil">
+          <h3 className='home-box__title'>Profil</h3>
+          <p className='home-box__text'>sup</p>
+          </Link>
+        
+          <Link className="home-box home-box--projekte" to="/projekte">
+          <h3 className='home-box__title'>Projekte</h3>
+          </Link>
+
+          <Link className="home-box home-box--einstellungen" to="/einstellungen">
+          <h3 className='home-box__title'>Einstellungen</h3>
+          </Link>
+        </div>
+
+        <footer>
+          
+        </footer>
       </main>
-  )
+  ) 
 }
 
 function App() {

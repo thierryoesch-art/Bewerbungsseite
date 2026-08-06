@@ -1,6 +1,6 @@
 function Interessen() {
     return (
-        <main>
+        <main className="wrap">
             <h1>Interessen</h1>
             <p>das sind meine Interessen</p>
         </main>

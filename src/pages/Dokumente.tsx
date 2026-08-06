@@ -1,6 +1,6 @@
 function Dokumente() {
     return (
-        <main>
+        <main className="wrap">
             <h1>Dokumente</h1>
             <p>das sind meine Dokumente</p>
         </main>
