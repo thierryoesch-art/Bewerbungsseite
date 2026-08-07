@@ -269,13 +269,13 @@ footer {
   overflow: hidden;
 }
 
-a.card:hover, a.card:focus-visible{
+.card--klick:hover, .card--klick:focus-visible{
   transform: translate(-2px);
   border-color: rgba(219, 219, 219, 0.774);
   box-shadow: 0 12px 32px rgba(255, 255, 255, 0.18)
 }
 
-a.card:focus-visible {
+.card--klick:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 3px;
 }
@@ -283,7 +283,7 @@ a.card:focus-visible {
 .card__text {
   margin: 0;
   font-size: 15px;
-  line-height: 1;
+  line-height: 1.5;
   color: #b7bac8;
 }
 
@@ -313,8 +313,8 @@ a.card:focus-visible {
   clip-path: polygon(60% 0, 100% 0, 100% 100%, 30% 100%);
 }
 
-a.card:hover::after,
-a.card:focus-visible::after {
+.card--klick:hover::after,
+.card--klick:focus-visible::after {
   opacity: 1;
 }
 
@@ -322,6 +322,14 @@ a.card:focus-visible::after {
 .card__text {
   position: relative;
   z-index: 1;
+}
+
+button.card {
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -432,7 +440,7 @@ a.card:focus-visible::after {
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg);
-  transition: transfrom 300ms ease;
+  transition: transform 300ms ease;
 }
 
 .skill__toggle[aria-expanded="true"] .skill__arrow {
@@ -466,6 +474,234 @@ a.card:focus-visible::after {
 
 
 
+.projekte {
+  list-style: none;
+  margin:0;
+  padding:0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 250px);
+  gap: 24px;
+}
+
+.projekt-karte {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.projekt-dialog {
+  width: min(720px, calc(100% - 40px));
+  max-height: 85vh;
+  padding: 0;
+  overflow: auto;
+  border: 2px solid #7c7b7b;
+  border-radius: 24px;
+  background: #111;
+  color: #f7f7fb;
+}
+
+.projekt-karte__bild {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.projekt-karte__text {
+  padding: 20px 24px;
+}
+
+.projekt-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.suche {
+  display: grid;
+  gap: 8px;
+  margin: 32px 0 20px;
+  width: min(360px, 100%);
+}
+
+.suche__label {
+  color: #b7bac8;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.suche input {
+  width: 100%;
+  padding: 12px 18px;
+  border: 2px solid #7c7b7b;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f7f7fb;
+  font: inherit;
+}
+
+.suche input::placeholder {
+  color: #7c7b7b;
+}
+
+.suche input:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-color: #fff;
+}
+
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.filter__btn {
+  padding: 8px 18px;
+  border: 2px solid #7c7b7b;
+  border-radius: 999px;
+  font: inherit;
+  font-size: inherit;
+  background: none;
+  color: #b7bac8;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, background 20ms ease;
+}
+
+.filter__btn:hover,
+.filter__btn:focus-visible {
+  color: #fff;
+  border-color: #fff;
+}
+
+.filter__btn--aktiv {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+}
+
+.projekt-dialog h2 {
+  margin: 0 0 12px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.dialog__text p {
+  margin: 0 0 24px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #b7bac8;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+}
+
+.tags li {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background:rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  color: #b7bac8;
+}
+
+.dialog__close {
+  padding: 10px 22px;
+  border: 2px solid #f00909;
+  border-radius: 999px;
+  background: none;
+  color: #f00909;
+  font: inherit;
+  cursor: pointer;
+}
+
+.dialog__close:hover,
+.dialog__close:focus-visible {
+  border-color: #fff;
+  color: #fff;
+}
+
+.dialog__aktionen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.dialog__github {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 22px;
+  border: 2px solid #7c7b7b;
+  border-radius: 999px;
+  border-color: #0080ff;
+  background: none;
+  color: #0080ff;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.dialog__github:hover,
+.dialog__github:focus-visible {
+  border-color: #fff;
+  color: #fff;
+}
+
+.dialog__inhalt {
+  display: block;
+}
+
+.dialog__bild {
+  display: block;
+  width: 100%;
+  height: 55vh;
+  object-fit: cover;
+  position: sticky;
+  top: 0;
+}
+
+.dialog__text {
+  position: relative;
+  margin-top: -28px;
+  padding: 32px;
+  border-radius: 28px 28px 0 0;
+  background: #111;
+}
+
+.dialog__x {
+  position: sticky;
+  top: 16px;
+  float: right;
+  z-index: 2;
+  margin: 16px 16px 0 0;
+
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.dialog__x:hover,
+.dialog__x:focus-visible {
+  background: rgba(0, 0, 0, 0.85);
+}
+
 @media (max-width: 760px) {
   .site-header {
     align-items: flex-start;
@@ -482,5 +718,13 @@ a.card:focus-visible::after {
     width: min(100% - 28px, 1180px);
     min-height: auto;
     padding: 72px 0;
+  }
+
+  .dialog__bild {
+    height: 40vh;
+  }
+
+  .dialog__text {
+    padding: 24px;
   }
 }
