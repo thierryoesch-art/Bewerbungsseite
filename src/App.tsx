@@ -22,17 +22,17 @@ function Home() {
         </p>
         <h3>Viel Spass!</h3>
         <div className='home-grid'>
-          <Link className="home-box home-box--profil" to="/profil">
-          <h3 className='home-box__title'>Profil</h3>
-          <p className='home-box__text'>sup</p>
+          <Link className="card card--profil" to="/profil">
+          <h3 className='card__title'>Profil</h3>
+          <p className='card__text'>sup</p>
           </Link>
         
-          <Link className="home-box home-box--projekte" to="/projekte">
-          <h3 className='home-box__title'>Projekte</h3>
+          <Link className="card card--projekte" to="/projekte">
+          <h3 className='card__title'>Projekte</h3>
           </Link>
 
-          <Link className="home-box home-box--einstellungen" to="/einstellungen">
-          <h3 className='home-box__title'>Einstellungen</h3>
+          <Link className="card card--einstellungen" to="/einstellungen">
+          <h3 className='card__title'>Einstellungen</h3>
           </Link>
         </div>
 
