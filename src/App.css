@@ -441,6 +441,31 @@ a.card:focus-visible::after {
 
 
 
+
+.interessen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 24px;
+}
+
+.interesse {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  align-items: center;
+  min-height: 0;
+}
+
+.interesse__bild {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+
+
 @media (max-width: 760px) {
   .site-header {
     align-items: flex-start;
