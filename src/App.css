@@ -220,7 +220,7 @@
 .eyebrow {
   margin: 0 0 18px;
   color: #b7bac8;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -235,7 +235,7 @@
 }
 
 p {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 h1,h3 {
@@ -282,7 +282,7 @@ footer {
 
 .card__text {
   margin: 0;
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.5;
   color: #b7bac8;
 }
@@ -355,7 +355,7 @@ button.card {
 
 .steckbrief__daten dt {
   color: #b7bac8;
-  font-size: 14px;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -420,7 +420,7 @@ button.card {
   margin: 0;
   padding-top: 12px;
   color: #b7bac8;
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .skill__toggle {
@@ -528,7 +528,7 @@ button.card {
 
 .suche__label {
   color: #b7bac8;
-  font-size: 14px;
+  font-size: 0.875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -591,7 +591,7 @@ button.card {
 
 .dialog__text p {
   margin: 0 0 24px;
-  font-size: 17px;
+  font-size: 1.0625rem;
   line-height: 1.6;
   color: #b7bac8;
 }
@@ -609,7 +609,7 @@ button.card {
   padding: 4px 12px;
   border-radius: 999px;
   background:rgba(255, 255, 255, 0.1);
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: #b7bac8;
 }
 
@@ -737,7 +737,7 @@ button.card {
 
 .station__zeit {
   margin: 0 0 6px;
-  font-size: 14px;
+  font-size: 0.875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #b7bac8;
@@ -782,7 +782,7 @@ button.card {
   border-radius: 999px;
   color: #f7f7fb;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .doku-download:hover,
@@ -793,6 +793,65 @@ button.card {
 .doku-gruppe__titel {
   margin: 48px 0 20px;
   font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+
+
+/* Bewegung */
+:root[data-bewegung="aus"] *,
+:root[data-bewegung="aus"] *::before,
+:root[data-bewegung="aus"] *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+}
+
+/* Naviagtion immer beschrigtet */
+:root[data-nav-labels="an"] .nav-pill {
+  width: var(--w);
+  background: #000;
+  border: 2px solid;
+}
+
+:root[data-nav-labels="an"] .nav-pill__label {
+  opacity: 1;
+}
+
+:root[data-nav-labels="an"] .nav-pill--saturn::before,
+:root[data-nav-labels="an"] .nav-pill--saturn::after {
+  opacity: 0;
+}
+
+/* Schriftgrösse */
+:root { --text-scale: 1; }
+:root[data-schrift="klein"] { --text-scale: 0.9; }
+:root[data-schrift="gross"] { --text-scale: 1.15; }
+
+html { font-size: calc(16px * var(--text-scale)); }
+
+/* Kontrast */
+:root[data-kontrast="an"] .card {
+  background: #1a1a1a;
+  border-color: #b7bac8;
+}
+
+:root[data-kontrast="an"] .card__text,
+:root[data-kontrast="an"] .skill__text,
+:root[data-kontrast="an"] .station__zeit {
+  color: #e8e8ee;
+}
+
+.einstellung { margin-bottom: 36px; }
+
+.einstellung__titel {
+  margin: 0 0 12px;
+  font-size: 1.125rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+:root {
+  --text-scale: 1;
+  font-size: calc(16px * var(--text-scale));
 }
 
 @media (max-width: 760px) {
