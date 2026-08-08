@@ -764,6 +764,37 @@ button.card {
   stroke-width: 2;
 }
 
+
+
+
+.dokumente {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.doku-download {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 16px;
+  padding: 8px 18px;
+  border: 2px solid #7c7b7b;
+  border-radius: 999px;
+  color: #f7f7fb;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.doku-download:hover,
+.doku-download:focus-visible {
+  border-color: #fff;
+}
+
+.doku-gruppe__titel {
+  margin: 48px 0 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 @media (max-width: 760px) {
   .site-header {
     align-items: flex-start;
