@@ -221,6 +221,18 @@
     0 0 14px color-mix(in srgb, var(--planet-color) 35%, transparent);
 }
 
+/* Der Abmelden-Knopf ist ein <button>, soll aber aussehen wie die
+   Planeten-Links daneben. Browser geben Buttons einen eigenen Rahmen,
+   eine eigene Schriftart und keinen Zeigefinger — das nehmen wir zurueck.
+   Der Rahmen beim :hover bleibt, weil er dort mehr Gewicht hat. */
+button.nav-pill {
+  border: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
 .nav-pill__label {
   opacity: 0;
   white-space: nowrap;
@@ -1051,32 +1063,6 @@ button.card {
   background: #111;
 }
 
-.dialog__x {
-  position: sticky;
-  top: 16px;
-  float: right;
-  z-index: 2;
-  margin: 16px 16px 0 0;
-
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font: inherit;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.dialog__x:hover,
-.dialog__x:focus-visible {
-  background: rgba(0, 0, 0, 0.85);
-}
-
-
-
 .zeitstrahl {
   position: relative;
   padding: 40px 0;
@@ -1156,6 +1142,7 @@ button.card {
   color: #f7f7fb;
   text-decoration: none;
   font-size: 0.875rem;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
 }
 
 .doku-download:hover,
@@ -1165,8 +1152,66 @@ button.card {
   color: var(--akzent-auf);
 }
 
-.doku-download {
-  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+/* Hinweiskarte, wenn jemand die Dokumente ohne Anmeldung aufruft */
+.doku-sperre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 34rem;
+  margin: 48px auto;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.doku-sperre__schloss {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  fill: none;
+  stroke: var(--akzent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--akzent) 45%, transparent));
+}
+
+.doku-sperre__titel {
+  margin: 0 0 12px;
+  color: var(--akzent-text);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.35rem;
+}
+
+.doku-sperre__text {
+  margin: 0 0 28px;
+  max-width: 30rem;
+  line-height: 1.6;
+  color: #cfcfd8;
+}
+
+.doku-sperre__knopf {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 32px;
+  border: 2px solid var(--akzent);
+  border-radius: 999px;
+  background: var(--akzent);
+  color: var(--akzent-auf);
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.doku-sperre__knopf:hover,
+.doku-sperre__knopf:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--akzent) 55%, transparent);
+}
+
+/* Wer die Bewegung abgewaehlt hat, bekommt nur den Schein, kein Anheben */
+[data-bewegung='aus'] .doku-sperre__knopf:hover,
+[data-bewegung='aus'] .doku-sperre__knopf:focus-visible {
+  transform: none;
 }
 
 .doku-gruppe__titel {

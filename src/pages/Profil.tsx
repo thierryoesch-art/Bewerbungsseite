@@ -29,7 +29,7 @@ function Profil() {
             <dd>3. Lehrjahr</dd>
 
             <dt>Nationalität:</dt>
-            <dd>Schweizer, Luxemburger</dd>
+            <dd>Schweizer, Luxemburger (nur genetisch)</dd>
 
             <dt>Hobbys:</dt>
             <dd>Magie, Bogenschiessen, Rudern, Gamen</dd>

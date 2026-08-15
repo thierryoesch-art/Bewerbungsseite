@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import './App.css'
 
 import Profil from './pages/Profil'
@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import Dokumente from './pages/Dokumente'
 import ParticlesWrapper from './components/ParticlesWrapper'
 import { EinstellungenProvider } from './context/EinstellungenContext'
+import { AnmeldungProvider, useAnmeldung } from './context/AnmeldungContext'
 import Impressum from './pages/Impressum'
 
 
@@ -47,6 +48,14 @@ function Home() {
 
 function SeitenKopf() {
   const [navOffen, setNavOffen] = useState(false)
+  const { anmeldung, abmelden } = useAnmeldung()
+  const navigate = useNavigate()
+
+  async function abmeldenUndHeim() {
+    await abmelden()
+    // Weg von einer Seite, die man abgemeldet nicht mehr sehen darf.
+    navigate('/', { replace: true })
+  }
 
   return (
           <header className="site-header">
@@ -114,11 +123,26 @@ function SeitenKopf() {
                 Einstellungen
               </span>
               </Link>
-              <Link className="nav-pill nav-pill--neptune" to="/login">
-              <span className="nav-pill__label">
-                Login
-              </span>
-              </Link>
+              {/* Solange /api/me noch nicht geantwortet hat ('unbekannt'),
+                  bleibt der Login-Eintrag stehen — sonst wuerde bei jedem
+                  Neuladen kurz der falsche Knopf aufblitzen. */}
+              {anmeldung.art === 'angemeldet' ? (
+                <button
+                  type="button"
+                  className="nav-pill nav-pill--neptune"
+                  onClick={abmeldenUndHeim}
+                >
+                  <span className="nav-pill__label">
+                    Abmelden
+                  </span>
+                </button>
+              ) : (
+                <Link className="nav-pill nav-pill--neptune" to="/login">
+                <span className="nav-pill__label">
+                  Login
+                </span>
+                </Link>
+              )}
               </div>
             </nav>
           </header>
@@ -152,6 +176,7 @@ function SeitenInhalt() {
 function App() {
   return (
     <EinstellungenProvider>
+      <AnmeldungProvider>
       <BrowserRouter>
         <div className="page-shell">
           <ParticlesWrapper>
@@ -193,6 +218,7 @@ function App() {
           </ParticlesWrapper>
         </div>
       </BrowserRouter>
+      </AnmeldungProvider>
     </EinstellungenProvider>
 
 

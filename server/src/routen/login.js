@@ -36,17 +36,10 @@ const anmeldeBremse = rateLimit({
 /**
  * POST /api/login
  *
- * TODO(du):
- *  1. benutzer und passwort aus req.body holen und pruefen, dass beides
- *     wirklich Strings sind (der Body kommt von aussen, ihm ist nicht zu trauen).
- *  2. findeHash(benutzer) holen.
- *  3. await bcrypt.compare(passwort, hash) — Achtung beim Fall
- *     "Benutzer existiert nicht", dazu sag ich dir im Chat was.
- *  4. Passt es nicht: res.status(401).json({ fehler: '...' })
- *     Passt es: sitzungSetzen(res, benutzer) und res.json({ ok: true })
- *
- * Wichtig: NIE zurueckmelden, ob der Benutzername oder das Passwort falsch
- * war — sonst kann man damit gueltige Benutzernamen herausfinden.
+ * Meldet nie zurueck, OB es den Benutzernamen gibt — sonst liessen sich
+ * damit gueltige Konten herausfinden. Aus demselben Grund wird bei einem
+ * unbekannten Namen gegen BLIND_HASH geprueft, damit beide Faelle
+ * gleich lange dauern.
  */
 router.post('/login', anmeldeBremse, async (req, res) => {
   const { benutzer, passwort } = req.body ?? {}
@@ -72,8 +65,8 @@ router.post('/login', anmeldeBremse, async (req, res) => {
  * Beantwortet die Frage "bin ich noch angemeldet?". Braucht das Frontend
  * nach jedem Reload — das httpOnly-Cookie kann JavaScript ja nicht lesen.
  *
- * TODO(du): sitzungLesen(req) aufrufen, dann entweder
- * res.json({ angemeldet: false }) oder res.json({ angemeldet: true, benutzer }).
+ * Bewusst kein 401: "nicht angemeldet" ist hier die normale, erfolgreiche
+ * Antwort auf die Frage, nicht ein abgewiesener Zugriff.
  */
 router.get('/me', (req, res) => {
   const benutzer = sitzungLesen(req)
@@ -85,9 +78,9 @@ router.get('/me', (req, res) => {
 /**
  * POST /api/logout
  *
- * TODO(du): res.clearCookie(COOKIE_NAME, { ... }) und res.json({ ok: true }).
- * Die Optionen muessen zu denen beim Setzen passen, sonst findet der
- * Browser das Cookie nicht und loescht es nicht.
+ * Die Cookie-Optionen muessen identisch zu denen in sitzungSetzen sein.
+ * clearCookie schickt in Wahrheit ein Set-Cookie mit abgelaufenem Datum,
+ * und der Browser loescht nur, wenn Name und Eigenschaften zusammenpassen.
  */
 router.post('/logout', (req, res) => {
   res.clearCookie(COOKIE_NAME, {

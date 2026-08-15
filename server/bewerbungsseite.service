@@ -1,0 +1,54 @@
+# systemd-Dienst fuer den Express-Server.
+#
+# Vorlage — vor dem Einsatz BENUTZER und PFADE anpassen, dann:
+#   sudo cp bewerbungsseite.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now bewerbungsseite
+#
+# Kontrolle:  systemctl status bewerbungsseite
+# Protokoll:  journalctl -u bewerbungsseite -f
+
+[Unit]
+Description=Bewerbungsseite Thierry Oesch
+Documentation=https://github.com/thierryoesch-art/Bewerbungsseite
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+# Nicht als root laufen lassen. Falls dein Benutzer anders heisst, hier anpassen.
+User=pi
+Group=pi
+
+WorkingDirectory=/home/pi/Bewerbungsseite/server
+
+# --env-file statt EnvironmentFile: Node liest die .env mit demselben Parser
+# wie im Entwicklungsbetrieb. systemd kaeme mit den Dollarzeichen in den
+# bcrypt-Hashes sonst leicht durcheinander.
+ExecStart=/usr/bin/node --env-file=.env src/index.js
+
+# Muss gesetzt sein, sonst fehlt dem Sitzungscookie das Secure-Flag und
+# der Login funktioniert ueber HTTPS nicht zuverlaessig.
+Environment=NODE_ENV=production
+
+Restart=always
+RestartSec=5
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=bewerbungsseite
+
+# --- Absicherung ---------------------------------------------------------
+# Der Dienst liest nur Dateien, er schreibt nichts. Falls etwas nicht
+# startet, diese Zeilen einzeln auskommentieren, um den Grund einzugrenzen.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

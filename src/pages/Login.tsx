@@ -1,21 +1,38 @@
 import { useState } from 'react'
+import type { SubmitEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { anmelden } from '../api/login'
+import { useAnmeldung } from '../context/AnmeldungContext'
 
 function Login() {
+  const navigate = useNavigate()
+  const { angemeldetMit } = useAnmeldung()
   const [benutzer, setBenutzer] = useState('')
   const [passwort, setPasswort] = useState('')
   const [fehler, setFehler] = useState('')
   const [laeuft, setLaeuft] = useState(false)
 
-  async function absenden(e: React.FormEvent) {
+  async function absenden(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault()
     setFehler('')
     setLaeuft(true)
 
     try {
       const ergebnis = await anmelden(benutzer, passwort)
-      if (!ergebnis.ok) setFehler(ergebnis.fehler)
-      // bei Erfolg: später Weiterleitung zu /dokumente
+
+      if (!ergebnis.ok) {
+        setFehler(ergebnis.fehler)
+        return
+      }
+
+      // Der Kopfzeile mitteilen, dass jetzt jemand angemeldet ist — sonst
+      // stuende dort weiterhin "Login", bis die Seite neu geladen wird.
+      angemeldetMit(benutzer)
+
+      // replace: true ersetzt den Login-Eintrag im Verlauf, statt einen
+      // neuen anzuhaengen. Sonst landet man mit dem Zurueck-Knopf wieder
+      // im Anmeldeformular, obwohl man laengst angemeldet ist.
+      navigate('/dokumente', { replace: true })
     } catch {
       setFehler('Unerwarteter Fehler bei der Anmeldung. Bitte später nochmal.')
     } finally {

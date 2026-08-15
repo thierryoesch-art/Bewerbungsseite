@@ -47,7 +47,6 @@ app.use((_req, res) => {
 // Express einen Fehler-Handler. Ohne ihn antwortet Express mit einer
 // HTML-Seite samt Stacktrace: der verraet Dateipfade und Programmaufbau,
 // und anmelden() im Frontend bekaeme HTML statt des erwarteten JSON.
-// eslint-disable-next-line no-unused-vars
 app.use((err, _req, res, _next) => {
   console.error(err)
   if (res.headersSent) return
