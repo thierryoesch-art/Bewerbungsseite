@@ -53,8 +53,9 @@ const dokumente: Dokument[] = [
 
 function Dokumente() {
     return (
-        <main className="wrap">
+        <main className="wrap seite seite--dokumente">
             <h1>Dokumente</h1>
+            <p>Das sind alle wichtigen Dokumente wie Zeugnisse oder Lebenslauf etc. Diese Dokumente sind streng vertraulich. Bitte brechen Sie mein Vertrauen nicht und geben Sie die Dokumente nicht weiter.</p>
             {kategorien.map((k) => {
                 const treffer = dokumente.filter((d) => d.kategorie === k)
                 if (treffer.length === 0) return null

@@ -1,14 +1,15 @@
 
 const stationen = [
-  { schule: 'Primarschule', zeit: '2013 – 2019', text: '...' },
-  { schule: 'Sekundarschule', zeit: '2019 – 2022', text: '...' },
-  { schule: 'Lehre als Informatiker EFZ', zeit: '2023 – heute', text: '...' },
+  { schule: 'Primarschule', zeit: '2015 – 2021', text: 'Pestalozzischulhaus in Thun. 1. bis 6. Klasse' },
+  { schule: 'Sekundarschule', zeit: '2021 – 2024', text: 'OS Progymatte Thun. 7. bis 9. Klasse' },
+  { schule: 'Lehre als Informatiker EFZ', zeit: '2024 – heute', text: 'bwd Bern und gibb Berufsschule. 1. bis 3. Ausbildungsjahr' },
 ]
 
 function Ausbildung() {
   return (
-    <main className="wrap">
+    <main className="wrap seite seite--ausbildung">
       <h1>Ausbildung</h1>
+      <p>Hier sehen Sie meine Ausbildung von der ersten Klasse bis zum 3. Ausbildungsjahr (heute).</p>
 
       <div className="zeitstrahl">
         <svg

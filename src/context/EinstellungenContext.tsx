@@ -18,17 +18,19 @@ const standard: Einstellungen = {
 }        
 
 function ladeStart(): Einstellungen  {
+  // Gespeicherte Wahl hat immer Vorrang
+  try {
+   const gespeichert = localStorage.getItem('einstellungen')
+   if (gespeichert) return {...standard, ...JSON.parse(gespeichert) }
+  } catch {
+    // kaputter Eintrag — dann Standard
+  }
+
+  // Nur beim allerersten Besuch: OS-Wunsch respektieren
   const basis = { ...standard }
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     basis.bewegung = 'aus'
-  }
-
-  try {     
-   const gespeichert = localStorage.getItem('einstellungen')
-   if (gespeichert) return {...basis, ...JSON.parse(gespeichert) }
-  } catch {
-    // kaputter Eintrag — dann eb
   }
 
   return basis

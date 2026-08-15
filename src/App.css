@@ -1,3 +1,65 @@
+/* ============================================================
+   Planetenfarben
+   Jede Seite bekommt die Farbe ihres Planeten aus der Navigation.
+   --akzent ist die Farbe der aktuellen Seite, --akzent-text eine
+   aufgehellte Variante, die auf Schwarz gut lesbar bleibt.
+   ============================================================ */
+:root {
+  --c-sonne:   #f5c645;
+  --c-merkur:  #b8b1a7;
+  --c-venus:   #e7c27d;
+  --c-erde:    #3f8cff;
+  --c-mars:    #d85a3a;
+  --c-jupiter: #d1a06a;
+  --c-saturn:  #ead08a;
+  --c-uranus:  #7de3e3;
+  --c-neptun:  #5578ff;
+
+  --akzent: var(--c-sonne);
+  /* Schriftfarbe auf gefüllten Flächen in der Akzentfarbe.
+     Helle Planeten tragen schwarze Schrift, dunkle weisse. */
+  --akzent-auf: #000;
+}
+
+.seite--profil       { --akzent: var(--c-merkur); }
+.seite--skills       { --akzent: var(--c-venus); }
+.seite--interessen   { --akzent: var(--c-erde);    --akzent-auf: #fff; }
+.seite--projekte     { --akzent: var(--c-mars);    --akzent-auf: #fff; }
+.seite--ausbildung   { --akzent: var(--c-jupiter); }
+.seite--dokumente    { --akzent: var(--c-saturn); }
+.seite--einstellungen{ --akzent: var(--c-uranus); }
+.seite--login        { --akzent: var(--c-neptun);  --akzent-auf: #fff; }
+
+/* Erde und Neptun sind dunkel — für Text auf Schwarz aufhellen */
+.seite {
+  --akzent-text: color-mix(in srgb, var(--akzent) 75%, #fff);
+}
+
+/* Überschrift jeder Seite bekommt einen Strich in der Planetenfarbe */
+.seite > h1 {
+  margin-bottom: 8px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid color-mix(in srgb, var(--akzent) 55%, transparent);
+}
+
+/* Seitenwechsel: Inhalt blendet kurz auf und steigt leicht hoch.
+   Endzustand ist bewusst transform: none — ein stehengebliebener
+   transform würde sonst zum Bezugsrahmen für fixierte Elemente. */
+@keyframes seite-rein {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.seiten-wechsel {
+  animation: seite-rein 380ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
 .page-shell {
   min-height: 100svh;
   color: #f7f7fb;
@@ -40,23 +102,87 @@
     #f5c645 60%,
     #ee9f28 100%
   );
-  box-shadow: 
-    0px 0px 15px #ee9f28, 
-    0px 0px 30px #ee9f28, 
+  box-shadow:
+    0px 0px 15px #ee9f28,
+    0px 0px 30px #ee9f28,
     0px 0px 60px #ee9f28;
   flex-shrink: 0;
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+/* Hover auf Sonne ODER Text vergrössert die Sonne leicht */
+.brand:hover .brand__sun,
+.brand:focus-visible .brand__sun {
+  transform: scale(1.12);
+  box-shadow:
+    0px 0px 20px #ee9f28,
+    0px 0px 42px #ee9f28,
+    0px 0px 80px #f5c645;
 }
 
 .brand__label {
   font-family: Georgia, 'Times New Roman', Times, serif;
+  transition: color 260ms ease;
 }
 
-.planet-nav {
+.brand:hover .brand__label,
+.brand:focus-visible .brand__label {
+  color: var(--c-sonne);
+}
+
+.brand:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+  border-radius: 999px;
+}
+
+.planet-nav__inner {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 20px;
   isolation: isolate;
+}
+
+/* Hamburger — nur auf Touch/schmalen Bildschirmen sichtbar */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 46px;
+  height: 46px;
+  padding: 0 11px;
+  border: 2px solid #7c7b7b;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+}
+
+.nav-toggle__strich {
+  display: block;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  background: #f7f7fb;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+  border-color: var(--c-sonne);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__strich:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__strich:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__strich:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .nav-pill {
@@ -215,6 +341,7 @@
 .wrap {
   margin: auto;
   width: min(1180px, calc(100% - 40px));
+  padding-bottom: 96px;
 }
 
 .eyebrow {
@@ -242,13 +369,80 @@ h1,h3 {
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-footer {
-
+.site-footer {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 40px 0 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px
+}  
+
+.site-footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 700;
+}
+
+.site-footer__sun {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: radial-gradient(circle closest-side at 50% 50%, 
+  #f4f6b9, 
+  #ead08a 30%, 
+  #f5c645 60%, 
+  #ee9f28 100%);
+
+  box-shadow: 0 0 8px #ee9f28;
+  flex-shrink: 0;
+}
+
+.site-footer__nav,
+.site-footer__kontakt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.site-footer__link {
+  color: #b7bac8;
+  font-size: 0.975rem;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.site-footer__link:hover {
+  color: #fff;
+}
+
+.site-footer__link:focus-visible {
+  outline: 2px solid;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.site-footer__copy {
+  margin: 28px 0 0;
+  color: #7f8296;
+  font-size: 0.875rem;
+}
+
+
 
 .home-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* min() verhindert Überlauf auf schmalen Handys */
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap:24px;
   margin-top: 48px;
 }
@@ -269,10 +463,63 @@ footer {
   overflow: hidden;
 }
 
+/* ---- Star Border ----------------------------------------------
+   Ein heller Bogen wandert einmal pro Runde um den Rahmen.
+   Der conic-gradient wird über eine Maske auf den 2px-Rand
+   beschnitten, damit die Card durchsichtig bleiben kann.
+   ---------------------------------------------------------------- */
+@property --stern-winkel {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes stern-kreisen {
+  to { --stern-winkel: 360deg; }
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 2px;
+  pointer-events: none;
+
+  background: conic-gradient(
+    from var(--stern-winkel),
+    transparent 0deg,
+    color-mix(in srgb, var(--akzent) 60%, transparent) 20deg,
+    var(--akzent) 32deg,
+    #fff 38deg,
+    var(--akzent) 44deg,
+    color-mix(in srgb, var(--akzent) 60%, transparent) 56deg,
+    transparent 76deg
+  );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+          mask-composite: exclude;
+
+  animation: stern-kreisen 7s linear infinite;
+}
+
 .card--klick:hover, .card--klick:focus-visible{
   transform: translate(-2px);
   border-color: rgba(219, 219, 219, 0.774);
-  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.18)
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--akzent) 25%, transparent);
+}
+
+/* beim Hover dreht der Bogen schneller */
+.card--klick:hover::before,
+.card--klick:focus-visible::before {
+  animation-duration: 2.5s;
 }
 
 .card--klick:focus-visible {
@@ -309,19 +556,34 @@ footer {
   background-position: right center;
 
   opacity: 0;
-  transition: opacity 300ms ease, transform 300ms ease;
-  clip-path: polygon(60% 0, 100% 0, 100% 100%, 30% 100%);
+  /* fährt von rechts herein statt einfach aufzublenden */
+  transform: translateX(32px);
+  transition: opacity 400ms ease, transform 400ms ease;
+  clip-path: polygon(72% 0, 100% 0, 100% 100%, 50% 100%);
+
+  /* zeichnet eine scharfe Linie entlang des schrägen Schnitts,
+     plus ein weiches Glühen in der Planetenfarbe */
+  filter:
+    drop-shadow(-3px 0 0 var(--akzent))
+    drop-shadow(-3px 0 10px color-mix(in srgb, var(--akzent) 70%, transparent));
 }
 
 .card--klick:hover::after,
 .card--klick:focus-visible::after {
   opacity: 1;
+  transform: translateX(0);
 }
 
 .card__title,
 .card__text {
   position: relative;
   z-index: 1;
+}
+
+/* Text bleibt links des Schnitts stehen und läuft nicht unter das Bild */
+.home-grid .card__title,
+.home-grid .card__text {
+  max-width: 46%;
 }
 
 button.card {
@@ -340,10 +602,44 @@ button.card {
   grid-template-columns: 1fr 220px;
   gap: 32px;
   align-items: start;
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid color-mix(in srgb, var(--akzent) 30%, transparent);
 }
 
 .steckbrief__title {
   grid-column: 1 / -1;
+}
+
+.steckbrief__text {
+  margin: 0;
+  padding: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  max-width: 68ch;        /* angenehme Zeilenlänge zum Lesen */
+}
+
+/* Abstand zwischen aufeinanderfolgenden Absätzen */
+.steckbrief__text + .steckbrief__text {
+  margin-top: 16px;
+}
+
+/* Luft über den Zwischenüberschriften, aber nicht über der ersten */
+.profil-text .steckbrief__title {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in srgb, var(--akzent) 30%, transparent);
+}
+
+.profil-text .steckbrief__title:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Abstand zwischen Überschrift und erstem Absatz */
+.profil-text .steckbrief__title + .steckbrief__text {
+  margin-top: 14px;
 }
 
 .steckbrief__daten {
@@ -380,14 +676,20 @@ button.card {
   margin:0;
   padding:0;
   display: grid;
-  gap: 20px;
+  gap: 4px;                /* Balken und Pfeil dichter zusammen */
 }
 
 .skill__head {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 10px;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+.skill__value {
+  color: var(--akzent-text);
+  font-variant-numeric: tabular-nums;
 }
 
 .skill__bar {
@@ -401,7 +703,12 @@ button.card {
   width: var(--level, 0%);
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #f5c645, #ee9f28);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--akzent) 55%, #000),
+    var(--akzent)
+  );
+  box-shadow: 0 0 12px color-mix(in srgb, var(--akzent) 45%, transparent);
 }
 
 .skill__more {
@@ -418,19 +725,27 @@ button.card {
   overflow: hidden;
   min-height: 0;
   margin: 0;
-  padding-top: 12px;
+  padding-top: 6px;
+  border-left: 2px solid color-mix(in srgb, var(--akzent) 45%, transparent);
+  padding-left: 14px;
   color: #b7bac8;
   font-size: 0.9375rem;
 }
 
 .skill__toggle {
   display: block;
-  margin: 8px auto 0;
-  padding: 8px;
+  margin: 0 auto;
+  padding: 2px 8px 4px;
   background: none;
   border: 0;
   color: #b7bac8;
   cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.skill__toggle:hover,
+.skill__toggle:focus-visible {
+  color: var(--akzent-text);
 }
 
 .skill__arrow {
@@ -470,6 +785,25 @@ button.card {
   width: 100%;
   object-fit: cover;
   border-radius: 24px;
+  border: 2px solid color-mix(in srgb, var(--akzent) 35%, transparent);
+}
+
+.interesse .card__title {
+  color: var(--akzent-text);
+}
+
+.interesse__audio {
+  margin: 18px 0 0;
+}
+
+.interesse__audio figcaption {
+  margin-bottom: 8px;
+  color: #b7bac8;
+  font-size: 0.875rem;
+}
+
+.interesse__audio audio {
+  width: min(100%, 380px);
 }
 
 
@@ -482,7 +816,8 @@ button.card {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 250px);
+  /* auto-fill statt fester 250px: füllt die Breite und bricht sauber um */
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
   gap: 24px;
 }
 
@@ -572,16 +907,47 @@ button.card {
   transition: color 200ms ease, border-color 200ms ease, background 20ms ease;
 }
 
+/* Hover in der Planetenfarbe statt weiss — so bleibt der Text lesbar */
 .filter__btn:hover,
 .filter__btn:focus-visible {
-  color: #fff;
-  border-color: #fff;
+  color: var(--akzent-text);
+  border-color: var(--akzent);
+  background: color-mix(in srgb, var(--akzent) 12%, transparent);
 }
 
 .filter__btn--aktiv {
-  background: #fff;
-  border-color: #fff;
+  background: var(--akzent);
+  border-color: var(--akzent);
+  color: var(--akzent-auf);
+}
+
+/* aktiver Knopf bleibt beim Hover gefüllt, Text lesbar */
+.filter__btn--aktiv:hover,
+.filter__btn--aktiv:focus-visible {
+  background: color-mix(in srgb, var(--akzent) 80%, #fff);
+  border-color: color-mix(in srgb, var(--akzent) 80%, #fff);
   color: #000;
+}
+
+.leer-hinweis {
+  margin: 8px 0 40px;
+  padding: 28px 32px;
+  border: 2px dashed color-mix(in srgb, var(--akzent) 45%, transparent);
+  border-radius: 24px;
+  color: #b7bac8;
+  font-size: 1rem;
+  max-width: 620px;
+}
+
+/* Projekte blenden beim Filtern gestaffelt ein */
+@keyframes karte-rein {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.projekte li {
+  animation: karte-rein 420ms ease both;
+  animation-delay: calc(var(--i, 0) * 60ms);
 }
 
 .projekt-dialog h2 {
@@ -608,9 +974,10 @@ button.card {
 .tags li {
   padding: 4px 12px;
   border-radius: 999px;
-  background:rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--akzent) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--akzent) 40%, transparent);
   font-size: 0.8125rem;
-  color: #b7bac8;
+  color: var(--akzent-text);
 }
 
 .dialog__close {
@@ -640,34 +1007,40 @@ button.card {
   display: inline-flex;
   align-items: center;
   padding: 10px 22px;
-  border: 2px solid #7c7b7b;
+  border: 2px solid var(--akzent);
   border-radius: 999px;
-  border-color: #0080ff;
   background: none;
-  color: #0080ff;
+  color: var(--akzent-text);
   font: inherit;
   text-decoration: none;
   cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
 }
 
 
 .dialog__github:hover,
 .dialog__github:focus-visible {
-  border-color: #fff;
-  color: #fff;
+  background: var(--akzent);
+  color: var(--akzent-auf);
 }
 
 .dialog__inhalt {
   display: block;
 }
 
-.dialog__bild {
+.dialog__bild,
+.dialog__video {
   display: block;
   width: 100%;
   height: 55vh;
   object-fit: cover;
   position: sticky;
   top: 0;
+}
+
+.dialog__video {
+  background: #000;
+  object-fit: contain;
 }
 
 .dialog__text {
@@ -787,12 +1160,61 @@ button.card {
 
 .doku-download:hover,
 .doku-download:focus-visible {
-  border-color: #fff;
+  border-color: var(--akzent);
+  background: var(--akzent);
+  color: var(--akzent-auf);
+}
+
+.doku-download {
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
 }
 
 .doku-gruppe__titel {
   margin: 48px 0 20px;
+  padding-left: 14px;
+  border-left: 4px solid var(--akzent);
+  color: var(--akzent-text);
   font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+/* Zwischenüberschriften der Skills-Gruppen in der Seitenfarbe */
+.seite--skills .card > h3 {
+  margin: 32px 0 4px;
+  padding-left: 14px;
+  border-left: 4px solid var(--akzent);
+  color: var(--akzent-text);
+}
+
+.seite--skills .card > h3:first-child {
+  margin-top: 0;
+}
+
+/* Profil: Steckbrief-Beschriftungen und Zwischentitel farbig */
+.seite--profil .steckbrief__daten dt {
+  color: var(--akzent-text);
+}
+
+.seite--profil .steckbrief__title {
+  color: var(--akzent-text);
+}
+
+.steckbrief__foto {
+  border: 2px solid color-mix(in srgb, var(--akzent) 45%, transparent);
+}
+
+/* Ausbildung: Zeitstrahl in der Seitenfarbe */
+.seite--ausbildung .zeitstrahl__linie path,
+.seite--ausbildung .zeitstrahl__ast {
+  stroke: color-mix(in srgb, var(--akzent) 70%, transparent);
+}
+
+.station__zeit {
+  color: var(--akzent-text);
+}
+
+/* Impressum-Links in Sonnenfarbe (Impressum hat keinen eigenen Planeten) */
+.impressum__link {
+  color: var(--c-sonne);
 }
 
 
@@ -803,10 +1225,19 @@ button.card {
 :root[data-bewegung="aus"] *::before,
 :root[data-bewegung="aus"] *::after {
   transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
   animation-duration: 0.01ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;   /* stoppt Dauerschleifen */
+  scroll-behavior: auto !important;
 }
 
 /* Naviagtion immer beschrigtet */
+:root[data-nav-labels="an"] .planet-nav__inner {
+  gap: 8px;              /* beschriftete Pills sind breit — weniger Abstand nötig */
+  row-gap: 12px;
+}
+
 :root[data-nav-labels="an"] .nav-pill {
   width: var(--w);
   background: #000;
@@ -841,12 +1272,119 @@ html { font-size: calc(16px * var(--text-scale)); }
   color: #e8e8ee;
 }
 
-.einstellung { margin-bottom: 36px; }
+.einstellung-gruppe {
+  min-height: 0;
+  margin-bottom: 24px;
+  padding: 28px 32px 8px;
+}
+
+.einstellung-gruppe__titel {
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--akzent) 35%, transparent);
+  color: var(--akzent-text);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.25rem;
+}
+
+.einstellung { margin-bottom: 32px; }
 
 .einstellung__titel {
-  margin: 0 0 12px;
+  display: block;
+  margin: 0 0 14px;
   font-size: 1.125rem;
   font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+/* Knöpfe in den Einstellungen etwas grösser als die Filter-Knöpfe */
+.einstellung .filter__btn {
+  padding: 12px 28px;
+  font-size: 1.0625rem;
+}
+
+/* ---- Schieber mit festen Rastpunkten ---- */
+.schieber {
+  -webkit-appearance: none;
+  appearance: none;
+  width: min(100%, 460px);
+  height: 8px;
+  margin: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+}
+
+.schieber::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #000;
+  border-radius: 999px;
+  background: var(--akzent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--akzent) 60%, transparent);
+  cursor: pointer;
+}
+
+.schieber::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #000;
+  border-radius: 999px;
+  background: var(--akzent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--akzent) 60%, transparent);
+  cursor: pointer;
+}
+
+.schieber:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+}
+
+/* Die Beschriftungen unter dem Schieber sind gleichzeitig anklickbar */
+.schieber__punkte {
+  display: flex;
+  justify-content: space-between;
+  width: min(100%, 460px);
+  margin-top: 10px;
+}
+
+.schieber__punkt {
+  padding: 4px 6px;
+  border: 0;
+  background: none;
+  color: #b7bac8;
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.schieber__punkt:hover,
+.schieber__punkt:focus-visible {
+  color: var(--akzent-text);
+}
+
+.schieber__punkt--aktiv {
+  color: var(--akzent-text);
+  font-weight: 700;
+}
+
+.zuruecksetzen {
+  padding: 12px 26px;
+  border: 2px solid #f00909;
+  border-radius: 999px;
+  background: none;
+  color: #ff6b6b;
+  font: inherit;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.zuruecksetzen:hover,
+.zuruecksetzen:focus-visible {
+  background: #f00909;
+  color: #fff;
 }
 
 :root {
@@ -854,16 +1392,246 @@ html { font-size: calc(16px * var(--text-scale)); }
   font-size: calc(16px * var(--text-scale));
 }
 
-@media (max-width: 760px) {
+
+
+
+.login {
+  max-width: 420px;
+  margin: 32px auto 0;
+  min-height: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.login__hinweis {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #b7bac8;
+}
+
+.feld {
+  display: grid;
+  gap: 8px;
+}
+
+.feld__label {
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b7bac8;
+}
+
+.feld input {
+  width: 100%;
+  padding: 12px 18px;
+  border: 2px solid #7c7b7b;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f7f7fb;
+  font: inherit;
+}
+
+.feld input:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-color: #fff;
+}
+
+.login__fehler {
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 128, 128, 0.5);
+  border-radius: 12px;
+  background: rgba(255, 80, 80, 0.1);
+  font-size: 0.9375rem;
+  color: #ff8080;
+}
+
+.feld input:focus-visible,
+.suche input:focus-visible {
+  border-color: var(--akzent);
+}
+
+.login__btn {
+  padding: 12px 24px;
+  border: 2px solid var(--akzent);
+  border-radius: 999px;
+  background: var(--akzent);
+  color: var(--akzent-auf);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+
+.login__btn:hover:not(:disabled),
+.login__btn:focus-visible:not(:disabled) {
+  background: color-mix(in srgb, var(--akzent) 75%, #fff);
+  border-color: color-mix(in srgb, var(--akzent) 75%, #fff);
+}
+
+.login__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+
+
+
+.impressum__block {
+  min-height: 0;
+  margin-bottom: 24px;
+}
+
+.impressum__liste {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 12px 28px;
+  margin: 0;
+}
+
+.impressum__liste dt {
+  color: #b7bac8;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.impressum__liste dd {
+  margin: 0;
+  color: #f7f7fb;
+}
+
+.impressum__link {
+  color: #f7f7fb;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.impressum__untertitel {
+  margin: 20px 0 8px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   Touch-Geräte: kein Hover verfügbar
+   ============================================================ */
+@media (hover: none) {
+  /* Bilder auf den Cards dauerhaft zeigen statt erst beim Hover */
+  .card::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hamburger auf schmalen Bildschirmen ODER Touch-Geräten */
+@media (max-width: 760px), (hover: none) {
   .site-header {
-    align-items: flex-start;
-    flex-direction: column;
-    width: min(100% - 28px, 1180px);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
   }
 
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Auf-/Zu-Animation über die Grid-Zeilenhöhe: 0fr -> 1fr ist
+     animierbar, anders als display oder height: auto.
+     visibility nimmt die Links im geschlossenen Zustand aus der
+     Tab-Reihenfolge — erst am Ende der Animation, daher die 320ms. */
   .planet-nav {
-    justify-content: flex-start;
+    display: grid;
+    grid-template-rows: 0fr;
+    order: 3;
     width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      grid-template-rows 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 220ms ease,
+      visibility 0s linear 320ms;
+  }
+
+  .planet-nav--offen {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      grid-template-rows 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 220ms ease,
+      visibility 0s;
+  }
+
+  /* min-height: 0 ist Pflicht, sonst ignoriert das Grid-Kind die 0fr */
+  .planet-nav__inner {
+    min-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2px;
+    padding: 6px 0 10px;
+  }
+
+  /* Im Menü keine Planeten-Kugeln, sondern eine Liste über die volle Breite.
+     Die Doppel-Selektoren fangen den Fall ab, dass in den Einstellungen
+     "Navigation beschriftet" auf an steht — die Regel dort ist spezifischer. */
+  .planet-nav__inner .nav-pill,
+  :root[data-nav-labels="an"] .planet-nav__inner .nav-pill {
+    width: 100%;
+    height: auto;
+    justify-content: flex-start;
+    padding: 15px 18px;
+
+    border: 0;
+    border-left: 4px solid var(--planet-color);
+    border-radius: 0 12px 12px 0;
+
+    background: none;
+    background-image: none;
+    box-shadow: none;
+
+    color: #f7f7fb;
+    font-size: 1.0625rem;
+    transition: background 220ms ease, color 220ms ease, padding-left 220ms ease;
+  }
+
+  /* Beschriftung im Menü immer sichtbar, ohne Verzögerung */
+  .planet-nav__inner .nav-pill__label {
+    opacity: 1;
+    transition: none;
+  }
+
+  /* Hover/Tap färbt die Zeile in der Farbe ihres Planeten */
+  .planet-nav__inner .nav-pill:hover,
+  .planet-nav__inner .nav-pill:focus-visible,
+  :root[data-nav-labels="an"] .planet-nav__inner .nav-pill:hover,
+  :root[data-nav-labels="an"] .planet-nav__inner .nav-pill:focus-visible {
+    width: 100%;
+    transform: none;
+    border: 0;
+    border-left: 4px solid var(--planet-color);
+    background: color-mix(in srgb, var(--planet-color) 20%, transparent);
+    color: var(--planet-color);
+    padding-left: 24px;
+  }
+
+  /* Saturnringe gehören zur Kugel — im Listenmodus weg */
+  .planet-nav__inner .nav-pill--saturn::before,
+  .planet-nav__inner .nav-pill--saturn::after {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    width: min(100% - 28px, 1180px);
+    padding: 20px 0;
+  }
+
+  .wrap {
+    width: min(100% - 28px, 1180px);
   }
 
   .hero-stage {
@@ -872,11 +1640,73 @@ html { font-size: calc(16px * var(--text-scale)); }
     padding: 72px 0;
   }
 
-  .dialog__bild {
+  .card {
+    padding: 22px;
+    border-radius: 32px;
+    min-height: 240px;
+  }
+
+  /* zweispaltige Layouts werden einspaltig */
+  .steckbrief {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .steckbrief__foto {
+    max-width: 260px;
+  }
+
+  .interesse {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* Zeitstrahl: Linie weg, Einträge untereinander */
+  .zeitstrahl__linie {
+    display: none;
+  }
+
+  .zeitstrahl__eintrag {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .zeitstrahl__eintrag:nth-child(even) .station {
+    grid-column: 1;
+  }
+
+  .zeitstrahl__liste {
+    gap: 28px;
+  }
+
+  .zeitstrahl {
+    padding: 12px 0;
+  }
+
+  .dialog__bild,
+  .dialog__video {
     height: 40vh;
   }
 
   .dialog__text {
     padding: 24px;
+  }
+}
+
+/* sehr schmale Handys: Bild auf den Home-Cards kleiner halten,
+   damit dem Text genug Platz bleibt */
+@media (max-width: 560px) {
+  .home-grid .card__title,
+  .home-grid .card__text {
+    max-width: 58%;
+  }
+
+  .card::after {
+    clip-path: polygon(84% 0, 100% 0, 100% 100%, 64% 100%);
+  }
+
+  .site-footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

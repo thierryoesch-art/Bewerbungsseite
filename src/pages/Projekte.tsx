@@ -1,26 +1,95 @@
-import { useState } from 'react' 
-import { useRef } from 'react' 
+import { useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import bildbewerbunsseite from '../assets/Bewerbungsseite.png'
+import ertewebsite from '../assets/erstewebseite.png'
+import boing from '../assets/Boing!.png'
+import raspy from '../assets/raspy.jpg'
+import mc from '../assets/MC.jpg'
+import websites from '../assets/websites.jpg'
+import healthtclock from '../assets/healthclock.jpg'
+import bolt from '../assets/bolt.jpg'
+import boltvideo from '../assets/bolt.mp4'
+import healthclockvid from '../assets/healthclockvid.mp4'
+
+// Videos: Datei in src/assets/ legen, dann diese Zeilen einkommentieren
+// import healthclockVideo from '../assets/healthclock.mp4'
+// import boltVideo from '../assets/bolt.mp4'
 
 type Projekt = {
   titel: string
   kurz: string
-  text: string 
+  text: string
   tags: string[]
   github?:string
   bild?:string
+  video?:string
 
 }
 
 const projekte: Projekt[] = [
   {
     titel: "Bewerbungsseite",
-    kurz: "Diese Seite hier",
-    text: "Längere Beschreibung zum Projekt für detail sei",
+    kurz: "Aktuelle Seite",
+    text: "Eine Webseite, die ich für meine Bewerbung für ein Praktikum gemacht habe. Sie ist mit React, TypeScript und CSS umgesetzt. Sie beinhaltet nützliche Informationen über mich und darüber, was ich gemacht habe.",
     tags: ['React', 'TypeScript', 'CSS'],
     github: "https://github.com/thierryoesch-art/Bewerbungsseite",
     bild: bildbewerbunsseite
   },
+  {
+    titel: "Meine erste Website",
+    kurz: "Die allererste Website",
+    text: "Das ist meine allererste Website, die ich je gemacht habe. Sie ist im ersten Semester an der IMS entstanden und komplett mit HTML und CSS umgesetzt, mit ein wenig JavaScript. Für diese Seite habe ich die Note 5.5 bekommen.",
+    tags: ['HTML', 'CSS'],
+    github: "http://116.203.218.177/oesch/",
+    bild: ertewebsite
+  },
+  {
+    titel: "Boing!",
+    kurz: "Mein C#-Game",
+    text: "Wir haben im 2. Semester den Auftrag bekommen, ein kleines Spiel mit C# zu machen. Ich habe mich für Boing! entschieden. Es ist ein kleines Plattformer-Spiel, inspiriert von Doodle Jump. Ich muss sagen, dass es nicht mein bestes Projekt ist.",
+    tags: ['C#', 'WinForms'],
+    github: "https://github.com/thierryoesch-art/Boing-", 
+    bild: boing
+  },
+  {
+    titel: "Minecraft Server",
+    kurz: "Ein Multiplayer-MC-Server auf meinem Raspy",
+    text: "Ich hoste bei mir zu Hause einen eigenen Minecraft-Server für bis zu 20 Spieler. Er läuft auf einem Raspberry Pi 5 und ich habe ihn mit NeoForge aufgesetzt.",
+    tags: ['Raspberry Pi', 'Gaming', 'Hardware'],
+    bild: mc
+  },
+  {
+    titel: "Terraria Server",
+    kurz: "Ein Multiplayer-Terraria-Server auf meinem Raspy",
+    text: "Ich hoste bei mir zu Hause einen eigenen Terraria-Server für bis zu 8 Spieler. Er läuft auf einem Raspberry Pi 5 und ich habe ihn mit TShock (einem Community-Tool zum Hosten von Servern) aufgesetzt.",
+    tags: ['Raspberry Pi', 'Gaming', 'Hardware'],
+    bild: raspy
+  },
+  {
+    titel: "Website vom Unterricht",
+    kurz: "Webseiten, die wir im Unterricht gemacht haben.",
+    text: "Wir haben an der gibb das Modul 293 «Webauftritt erstellen und veröffentlichen» absolviert. Dabei haben wir drei Übungsseiten gemacht, die wir dann auch auf dem Schulserver veröffentlicht haben.",
+    tags: ['HTML', 'CSS', 'JavaScript'],
+    github: "https://inf-293-24f-m293user11.iet-gibb.net/indexTeil1.html",
+    bild: websites
+  },
+  {
+    titel: "HealthClock",
+    kurz: "Eine eigene Smartwatch selbst bauen",
+    text: "In einer Projektwoche haben zwei Kollegen und ich uns entschieden, eine Smartwatch von Grund auf selbst zu bauen. Dafür haben wir einen Arduino verwendet. Die Uhr ist mit C++ programmiert und verwendet verschiedene Sensoren, um die Gesundheitsdaten zu messen. Die werden dann auf der Uhr selbst zurückgegeben und auf einer Webseite als Graph, wie man auf der Vidoe sieht. Bei diesem Teil habe ich aber nicht mitgeholfen, deswegen habe ich auch kein C++-Tag gesetzt.",
+    tags: ['Hardware', 'Arduino'],
+    bild: healthtclock,
+    video: healthclockvid
+  },
+  {
+    titel: "B.O.L.T",
+    kurz: "Break old Limits Today",
+    text: "B.O.L.T ist eine App, die wir in einem üK umgesetzt haben. Mit ihr kann man eine Distanz einmessen, entweder indem man sie abläuft oder indem man sie vorher erstellt. Diese Strecke kann man dann absprinten. Dafür bekommt man Level, die einen motivieren sollen. Die Mobile-App haben wir mit Flutter gemacht.",
+    tags: ['Flutter', 'Mobile'],
+    bild: bolt,
+    video: boltvideo
+  },
+  
 ]
 
 const alleTags = [...new Set(projekte.flatMap((p) => p.tags))]
@@ -35,7 +104,8 @@ function Projekte() {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   const gefiltert = projekte.filter((p) => {
-    const passtZumTag = aktiveTags.length === 0 || aktiveTags.some((t) => p.tags.includes(t))
+    // every statt some: bei mehreren Tags müssen alle zutreffen
+    const passtZumTag = aktiveTags.every((t) => p.tags.includes(t))
     const passtZurSuche = p.titel.toLowerCase().includes(suche.toLowerCase())
     return passtZumTag && passtZurSuche
   })
@@ -51,9 +121,9 @@ function Projekte() {
   }
 
   return (
-      <main className="wrap">
+      <main className="wrap seite seite--projekte">
         <h1>Projekte</h1>
-        <p>Das sind meine Projekte</p>
+        <p>Das sind meine Projekte.</p>
           <label className="suche">
             <span className="suche__label">Projekte suchen</span>
             <input
@@ -61,7 +131,7 @@ function Projekte() {
               value={suche}
               onChange={(e) => setSuche(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
-              placeholder="z.B. React"
+              placeholder="z. B. Boing!"
             />
           </label>
 
@@ -86,19 +156,29 @@ function Projekte() {
             ))}
           </div>
 
-      <ul className='projekte card-grid'>
-        {gefiltert.map((p) => (
-          <li key={p.titel}>
-            <button className='card card--klick projekt-karte' onClick={() => oeffnen(p)} >
-              <img className='projekt-karte__bild' src={p.bild} alt='' />
-              <div className='projekt-karte__text'>
-                <h3 className="card__title">{p.titel}</h3>
-                <p className='card__text'>{p.kurz}</p>
-              </div>
-            </button>
-          </li>
-        ))}
-      </ul>
+      {gefiltert.length === 0 ? (
+        <p className='leer-hinweis' role='status'>
+          Nichts gefunden. Zu dieser Kombination gibt es kein Projekt — probieren Sie
+          weniger Filter oder einen anderen Suchbegriff.
+        </p>
+      ) : (
+        /* key erzwingt ein Neuaufbauen der Liste, damit die Einblend-Animation
+           bei jedem Filterwechsel neu läuft. Bewusst ohne die Suche — sonst
+           würde sie bei jedem getippten Buchstaben neu starten. */
+        <ul className='projekte card-grid' key={aktiveTags.join('|')}>
+          {gefiltert.map((p, i) => (
+            <li key={p.titel} style={{ '--i': i } as CSSProperties}>
+              <button className='card card--klick projekt-karte' onClick={() => oeffnen(p)} >
+                <img className='projekt-karte__bild' src={p.bild} alt='' />
+                <div className='projekt-karte__text'>
+                  <h3 className="card__title">{p.titel}</h3>
+                  <p className='card__text'>{p.kurz}</p>
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <dialog
         ref={dialogRef}
@@ -110,7 +190,20 @@ function Projekte() {
 
 
 
-            <img className="dialog__bild" src={offen.bild} alt="" />
+            {offen.video ? (
+              <video
+                className="dialog__video"
+                src={offen.video}
+                poster={offen.bild}
+                controls
+                preload="metadata"
+                playsInline
+              >
+                Ihr Browser kann dieses Video nicht abspielen.
+              </video>
+            ) : (
+              <img className="dialog__bild" src={offen.bild} alt="" />
+            )}
 
             <div className="dialog__text">
               <h2>{offen.titel}</h2>
@@ -121,9 +214,11 @@ function Projekte() {
               </ul>
 
               <div className="dialog__aktionen">
-                <a className="dialog__github" href={offen.github} target="_blank" rel="noreferrer">
-                  Auf GitHub ansehen
-                </a>
+                {offen.github && (
+                  <a className="dialog__github" href={offen.github} target="_blank" rel="noreferrer">
+                    Projekt ansehen
+                  </a>
+                )}
                 <button className="dialog__close" onClick={() => dialogRef.current?.close()}>
                   Schliessen
                 </button>

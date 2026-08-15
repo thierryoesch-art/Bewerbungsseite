@@ -1,0 +1,3 @@
+# Hier liegen die vertraulichen PDFs (Zeugnisse, Lebenslauf, Kompetenznachweise).
+# Der Inhalt dieses Ordners ist per .gitignore vom Repository ausgeschlossen.
+# Die erwarteten Dateinamen stehen in server/src/routen/dokumente.js.

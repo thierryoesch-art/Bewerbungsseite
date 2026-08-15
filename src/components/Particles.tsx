@@ -1,8 +1,23 @@
 import React, { useEffect, useRef } from 'react';
-// @ts-ignore - ogl has no bundled types in many setups
 import { Renderer, Camera, Geometry, Program, Mesh } from 'ogl';
 
 import './Particles.css';
+
+type ParticlesProps = {
+  particleCount?: number;
+  particleSpread?: number;
+  speed?: number;
+  particleColors?: string[];
+  moveParticlesOnHover?: boolean;
+  particleHoverFactor?: number;
+  alphaParticles?: boolean;
+  particleBaseSize?: number;
+  sizeRandomness?: number;
+  cameraDistance?: number;
+  disableRotation?: boolean;
+  pixelRatio?: number;
+  className?: string;
+};
 
 const defaultColors = ['#ffffff', '#ffffff', '#ffffff'];
 
@@ -86,7 +101,7 @@ const fragment = /* glsl */ `
   }
 `;
 
-const Particles: React.FC<any> = ({
+const Particles: React.FC<ParticlesProps> = ({
   particleCount = 200,
   particleSpread = 10,
   speed = 0.1,
@@ -113,7 +128,7 @@ const Particles: React.FC<any> = ({
       depth: false,
       alpha: true
     });
-    const gl = renderer.gl as any;
+    const gl = renderer.gl;
     container.appendChild(gl.canvas);
     gl.clearColor(0, 0, 0, 0);
 
