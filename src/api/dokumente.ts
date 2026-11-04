@@ -66,6 +66,14 @@ export function dokumentUrl(id: string) {
 }
 
 /**
+ * Die Adresse des ZIP-Archivs mit allen Dokumenten. Gleiches Prinzip wie
+ * dokumentUrl: ein normaler Link, das Sitzungscookie geht automatisch mit.
+ */
+export function dokumenteZipUrl() {
+  return '/api/dokumente/alle/zip'
+}
+
+/**
  * Die Adresse des Vorschaubilds.
  *
  * Auch das laeuft ueber den Server und nicht ueber src/assets/: ein

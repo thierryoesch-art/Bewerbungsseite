@@ -18,10 +18,10 @@ Wants=network-online.target
 Type=simple
 
 # Nicht als root laufen lassen. Falls dein Benutzer anders heisst, hier anpassen.
-User=pi
-Group=pi
+User=thierry
+Group=thierry
 
-WorkingDirectory=/home/pi/Bewerbungsseite/server
+WorkingDirectory=/home/thierry/Bewerbungsseite/server
 
 # --env-file statt EnvironmentFile: Node liest die .env mit demselben Parser
 # wie im Entwicklungsbetrieb. systemd kaeme mit den Dollarzeichen in den

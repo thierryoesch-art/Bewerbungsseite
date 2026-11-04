@@ -1,5 +1,7 @@
 //noch das bild Importieren
 import ich from "../assets/ich.jpg"
+import ichSchule from "../assets/ich-schule.jpg"
+import ichFlug from "../assets/ich-flug.jpg"
 
 
 function Profil() {
@@ -44,19 +46,26 @@ function Profil() {
         <div className="profil-text">
           <h3 className="card__title steckbrief__title">Über Mich</h3>
 
-          <p className="steckbrief__text">
-            Mein Name ist Thierry Oesch, ich bin 17 Jahre alt und wurde am 13.02.2009 geboren.
-            Zurzeit absolviere ich die IMS mit Schwerpunkt Informatik an der bwd Bern und
-            besuche die gibb Berufsschule Bern. Ein grosser Vorteil der IMS ist für mich, dass
-            ich nach meiner Ausbildung zusätzlich die Berufsmaturität erhalte.
-          </p>
+          <div className="profil-abschnitt">
+            <img className="profil-abschnitt__bild" src={ichSchule} alt="Thierry an der Schule" />
 
-          <p className="steckbrief__text">
-            Ich habe eine jüngere Schwester und bin in einer Familie aufgewachsen, in der
-            handwerkliches Arbeiten eine wichtige Rolle spielt. Meine Eltern sind beide
-            Klavierstimmer. Dadurch bin ich schon früh mit dem Bauen, Reparieren und dem
-            genauen Arbeiten in Kontakt gekommen.
-          </p>
+            <div className="profil-abschnitt__text">
+              <p className="steckbrief__text">
+                Mein Name ist Thierry Oesch, ich bin 17 Jahre alt und wurde am 13.02.2009 geboren.
+                Zurzeit absolviere ich die IMS mit Schwerpunkt Informatik an der bwd Bern und
+                besuche die gibb Berufsschule Bern. Ein grosser Vorteil der IMS ist für mich, dass
+                ich nach meiner Ausbildung zusätzlich die Berufsmaturität erhalte. Ausserdem bin ich
+                zweisprachig aufgewachsen und spreche fliessend Deutsch und Französisch.
+              </p>
+
+              <p className="steckbrief__text">
+                Ich habe eine jüngere Schwester und bin in einer Familie aufgewachsen, in der
+                handwerkliches Arbeiten eine wichtige Rolle spielt. Meine Eltern sind beide
+                Klavierstimmer. Dadurch bin ich schon früh mit dem Bauen, Reparieren und dem
+                genauen Arbeiten in Kontakt gekommen.
+              </p>
+            </div>
+          </div>
 
           <p className="steckbrief__text">
             Schon als Kind hatte ich Freude daran, Dinge zu bauen und herauszufinden, wie sie
@@ -73,18 +82,24 @@ function Profil() {
 
           <h3 className="card__title steckbrief__title">Warum Informatik?</h3>
 
-          <p className="steckbrief__text">
-            Schon seit ich klein bin, hat mich das Bauen und Erschaffen von Dingen interessiert.
-            Ich hatte schon immer Freude daran, herauszufinden, wie etwas funktioniert und wie
-            man aus einzelnen Teilen etwas Neues entstehen lassen kann. Dabei habe ich gemerkt,
-            dass mir besonders logisches Denken und das Lösen von Problemen liegen.
-          </p>
+          <div className="profil-abschnitt profil-abschnitt--bild-rechts">
+            <div className="profil-abschnitt__text">
+              <p className="steckbrief__text">
+                Schon seit ich klein bin, hat mich das Bauen und Erschaffen von Dingen interessiert.
+                Ich hatte schon immer Freude daran, herauszufinden, wie etwas funktioniert und wie
+                man aus einzelnen Teilen etwas Neues entstehen lassen kann. Dabei habe ich gemerkt,
+                dass mir besonders logisches Denken und das Lösen von Problemen liegen.
+              </p>
 
-          <p className="steckbrief__text">
-            Als ich etwa 7 Jahre alt war, hatte ich das erste Mal richtig Kontakt mit dem
-            Programmieren: Scratch. Ausserdem habe ich damals mit einem Kollegen angefangen,
-            Binär zu lernen.
-          </p>
+              <p className="steckbrief__text">
+                Als ich etwa 7 Jahre alt war, hatte ich das erste Mal richtig Kontakt mit dem
+                Programmieren: Scratch. Ausserdem habe ich damals mit einem Kollegen angefangen,
+                Binär zu lernen.
+              </p>
+            </div>
+
+            <img className="profil-abschnitt__bild" src={ichFlug} alt="Thierry mit seinem Vater" />
+          </div>
 
           <p className="steckbrief__text">
             In der Oberstufe habe ich das Freifach Robotik besucht, und in der 8. Klasse einen

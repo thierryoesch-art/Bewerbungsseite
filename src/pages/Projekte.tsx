@@ -28,9 +28,8 @@ const projekte: Projekt[] = [
   {
     titel: "Meine erste Website",
     kurz: "Die allererste Website",
-    text: "Das ist meine allererste Website, die ich je gemacht habe. Sie ist im ersten Semester an der IMS entstanden und komplett mit HTML und CSS umgesetzt, mit ein wenig JavaScript. Für diese Seite habe ich die Note 5.5 bekommen.",
+    text: "Das ist meine allererste Website, die ich je gemacht habe. Sie ist im ersten Semester an der IMS entstanden und komplett mit HTML und CSS umgesetzt, mit ein wenig JavaScript. Für diese Seite habe ich die Note 5.5 bekommen.(Die Domain auf der die Seite gehosted wurde, gibt es nicht mehr)",
     tags: ['HTML', 'CSS'],
-    github: "http://116.203.218.177/oesch/",
     bild: medien('erstewebseite.png')
   },
   {
@@ -79,6 +78,16 @@ const projekte: Projekt[] = [
     bild: medien('bolt.jpg'),
     video: medien('bolt.mp4')
   },
+  {
+    titel: "NoAiAndPythonProject",
+    kurz: "Python lehrprojekt ohne AI",
+    text: "Ein gemeinsames Repository mit einem Kollegen, in dem wir Python lernen. Jeder von uns hat einen eigenen Branch mit kleinen Programmen, die wir uns selbst ausgedacht haben, bei mir unter anderem ein Schere-Stein-Papier-Spiel. Die Besonderheit: Wir haben uns vorgenommen, keinen Zeile Code von einer KI schreiben zu lassen. Beim Programmieren greifen wir sonst oft darauf zurück, und bei einer Sprache wollten wir wissen, wie weit wir ohne kommen. Python bot sich an, weil wir beide kaum Vorkenntnisse hatten.",
+    tags: ['Python'],
+    github: "https://github.com/bergaminio/NoAiAndPythonProject/tree/project2",
+    bild: medien('Python.png'),
+    
+  },
+
   
 ]
 

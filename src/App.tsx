@@ -89,36 +89,43 @@ function SeitenKopf() {
               {/* innerer Wrapper: über ihn läuft die Auf-/Zu-Animation */}
               <div className="planet-nav__inner">
               <Link className="nav-pill nav-pill--mercury" to="/profil">
+              <span className="nav-pill__planet" aria-hidden="true" />
               <span className="nav-pill__label">
                 Profil
               </span>
               </Link>
               <Link className="nav-pill nav-pill--venus" to="/skills">
+              <span className="nav-pill__planet" aria-hidden="true" />
               <span className="nav-pill__label">
                 Skills
               </span>
               </Link>
               <Link className="nav-pill nav-pill--earth" to="/interessen">
+              <span className="nav-pill__planet" aria-hidden="true" />
               <span className="nav-pill__label">
                 Interessen
               </span>
               </Link>
               <Link className="nav-pill nav-pill--mars" to="/projekte">
+              <span className="nav-pill__planet" aria-hidden="true" />
               <span className="nav-pill__label">
                 Projekte
               </span>
               </Link>
               <Link className="nav-pill nav-pill--jupiter" to="/ausbildung">
+              <span className="nav-pill__planet" aria-hidden="true" />
               <span className="nav-pill__label">
                 Ausbildung
               </span>
               </Link>
               <Link className="nav-pill nav-pill--saturn" to="/dokumente">
+              <span className="nav-pill__planet" aria-hidden="true" />
               <span className="nav-pill__label">
                 Dokumente
               </span>
               </Link>
               <Link className="nav-pill nav-pill--uranus" to="/einstellungen">
+              <span className="nav-pill__planet" aria-hidden="true" />
               <span className="nav-pill__label">
                 Einstellungen
               </span>
@@ -132,12 +139,14 @@ function SeitenKopf() {
                   className="nav-pill nav-pill--neptune"
                   onClick={abmeldenUndHeim}
                 >
+                  <span className="nav-pill__planet" aria-hidden="true" />
                   <span className="nav-pill__label">
                     Abmelden
                   </span>
                 </button>
               ) : (
                 <Link className="nav-pill nav-pill--neptune" to="/login">
+                <span className="nav-pill__planet" aria-hidden="true" />
                 <span className="nav-pill__label">
                   Login
                 </span>

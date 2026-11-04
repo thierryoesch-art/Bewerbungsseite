@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ladeDokumente, dokumentUrl, dokumentBildUrl } from '../api/dokumente'
+import { ladeDokumente, dokumentUrl, dokumentBildUrl, dokumenteZipUrl } from '../api/dokumente'
 import type { Dokument } from '../api/dokumente'
 import platzhalterBild from '../assets/vite.svg'
 
@@ -85,6 +85,13 @@ function Dokumente() {
         <main className="wrap seite seite--dokumente">
             <h1>Dokumente</h1>
             <p>Das sind alle wichtigen Dokumente wie Zeugnisse oder Lebenslauf etc. Diese Dokumente sind streng vertraulich. Bitte brechen Sie mein Vertrauen nicht und geben Sie die Dokumente nicht weiter.</p>
+
+            <div className="doku-zip">
+                <a className="doku-zip-knopf" href={dokumenteZipUrl()}>
+                    Alle Dokumente als ZIP herunterladen
+                </a>
+            </div>
+
             {kategorien.map((k) => {
                 const treffer = zustand.dokumente.filter((d) => d.kategorie === k)
                 if (treffer.length === 0) return null

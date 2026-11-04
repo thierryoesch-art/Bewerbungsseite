@@ -33,3 +33,9 @@ server/dokumente/*
 *.sln
 *.sw?
 src/assets/PDFs/
+
+# Lokale Claude-Code-Einstellungen, gehoeren nicht ins Repo.
+.claude/
+
+# Persoenliche Anleitung fuer den Betrieb auf dem Pi.
+NEUER-LOGIN.md

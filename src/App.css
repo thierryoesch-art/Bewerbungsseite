@@ -188,6 +188,11 @@
 .nav-pill {
   --planet-color: #fff;
   --planet-size: 44px;
+  /* Das Foto (falls vorhanden) UND der Farbverlauf als Fallback fuer
+     Planeten ohne Foto (Uranus) — als zwei Ebenen uebereinander, damit
+     beide Stellen (Kugel hier unten, kleines Icon im Handy-Menue weiter
+     unten) dieselbe Definition benutzen koennen, statt sie zu duplizieren. */
+  --planet-bild: none;
   transition: width 260ms ease;
 
   display: inline-flex;
@@ -206,15 +211,17 @@
   font-weight: 650;
   line-height: 1;
 
-  background: radial-gradient(
-    circle at 30% 25%,
-    color-mix(in srgb, var(--planet-color) 35%,#fff) 0%,
-    var(--planet-color) 45%,
-    color-mix(in srgb,var(--planet-color) 55%, #000) 100%
-  );
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image:
+    var(--planet-bild),
+    radial-gradient(
+      circle at 30% 25%,
+      color-mix(in srgb, var(--planet-color) 35%,#fff) 0%,
+      var(--planet-color) 45%,
+      color-mix(in srgb,var(--planet-color) 55%, #000) 100%
+    );
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
 
   box-shadow:
     inset -5px -5px 10px rgba(0, 0, 0, 0.45),
@@ -235,8 +242,17 @@ button.nav-pill {
 
 .nav-pill__label {
   opacity: 0;
+  padding: 0 4px;
   white-space: nowrap;
   transition: opacity 120ms ease 0ms;
+}
+
+/* Kleines rundes Planeten-Icon fuers Handy-Listenmenue — auf der Kugel
+   (Desktop) unsichtbar, die zeigt ihr Planetenfoto ja schon als eigenen
+   Hintergrund. Eigenes Element statt ::before/::after, damit es sich
+   nicht mit Saturns Ring-Pseudoelementen in die Quere kommt. */
+.nav-pill__planet {
+  display: none;
 }
 
 .nav-pill:hover,
@@ -261,37 +277,37 @@ button.nav-pill {
 .nav-pill--mercury {
   --planet-color: #b8b1a7;
   --w: 80px;
-  background-image: url('./assets/merkur.jpg');
+  --planet-bild: url('./assets/merkur.jpg');
 }
 
 .nav-pill--venus {
   --planet-color: #e7c27d;
   --w: 70px;
-  background-image: url('./assets/venus.jpg');
+  --planet-bild: url('./assets/venus.jpg');
 }
 
 .nav-pill--earth {
   --planet-color: #3f8cff;
   --w: 110px;
-  background-image: url('./assets/erde.jpg');
+  --planet-bild: url('./assets/erde.jpg');
 }
 
 .nav-pill--mars {
   --planet-color: #d85a3a;
   --w: 90px;
-  background-image: url('./assets/mars.jpg');
+  --planet-bild: url('./assets/mars.jpg');
 }
 
 .nav-pill--jupiter {
   --planet-color: #d1a06a;
   --w: 125px;
-  background-image: url('./assets/jupiter.jpg');
+  --planet-bild: url('./assets/jupiter.jpg');
 }
 
 .nav-pill--saturn {
   --planet-color: #ead08a;
   --w: 115px;
-  background-image: url('./assets/saturn.png');
+  --planet-bild: url('./assets/saturn.png');
   position: relative;
 }
 
@@ -337,8 +353,9 @@ button.nav-pill {
 
 .nav-pill--neptune {
   --planet-color: #5578ff;
-  --w: 80px;
-  background-image: url('./assets/neptun.jpg');
+  /* Muss "Abmelden" fassen, nicht nur "Login" — sonst wirkt der Text gequetscht. */
+  --w: 108px;
+  --planet-bild: url('./assets/neptun.jpg');
 }
 
 .hero-stage {
@@ -678,6 +695,41 @@ button.card {
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 12px;
+}
+
+/* Bild neben einem Textabschnitt im "Über mich" — auf schmalen Bildschirmen
+   rutscht das Bild unter den Text, siehe Media Query weiter unten. */
+.profil-abschnitt {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.profil-abschnitt--bild-rechts {
+  grid-template-columns: 1fr 220px;
+}
+
+.profil-abschnitt--bild-rechts .profil-abschnitt__bild {
+  order: 2;
+}
+
+.profil-abschnitt__text {
+  display: grid;
+  gap: 16px;
+}
+
+.profil-abschnitt__text .steckbrief__text {
+  margin: 0;
+}
+
+.profil-abschnitt__bild {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 2px solid color-mix(in srgb, var(--akzent) 35%, transparent);
 }
 
 
@@ -1150,6 +1202,37 @@ button.card {
   border-color: var(--akzent);
   background: var(--akzent);
   color: var(--akzent-auf);
+}
+
+.doku-zip {
+  margin: 4px 0 8px;
+}
+
+.doku-zip-knopf {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 26px;
+  border: 2px solid var(--akzent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--akzent-text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 200ms ease, color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.doku-zip-knopf:hover,
+.doku-zip-knopf:focus-visible {
+  background: var(--akzent);
+  color: var(--akzent-auf);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--akzent) 55%, transparent);
+}
+
+[data-bewegung='aus'] .doku-zip-knopf:hover,
+[data-bewegung='aus'] .doku-zip-knopf:focus-visible {
+  transform: none;
 }
 
 /* Hinweiskarte, wenn jemand die Dokumente ohne Anmeldung aufruft */
@@ -1627,11 +1710,11 @@ html { font-size: calc(16px * var(--text-scale)); }
     width: 100%;
     height: auto;
     justify-content: flex-start;
-    padding: 15px 18px;
+    gap: 14px;
+    padding: 12px 20px;
 
     border: 0;
-    border-left: 4px solid var(--planet-color);
-    border-radius: 0 12px 12px 0;
+    border-radius: 12px;
 
     background: none;
     background-image: none;
@@ -1639,13 +1722,78 @@ html { font-size: calc(16px * var(--text-scale)); }
 
     color: #f7f7fb;
     font-size: 1.0625rem;
-    transition: background 220ms ease, color 220ms ease, padding-left 220ms ease;
+    transition: background 220ms ease, color 220ms ease;
   }
 
   /* Beschriftung im Menü immer sichtbar, ohne Verzögerung */
   .planet-nav__inner .nav-pill__label {
     opacity: 1;
+    padding: 0;
     transition: none;
+  }
+
+  /* Statt des Farbstrichs ein kleines rundes Planeten-Icon vor dem Text —
+     dieselbe Definition (--planet-bild / --planet-color) wie die grosse
+     Kugel oben, nur klein. Uranus hat kein Foto und zeigt darum nur den
+     Farbverlauf, wie bei der Kugel auch. */
+  .planet-nav__inner .nav-pill__planet {
+    display: block;
+    position: relative;    /* Bezugspunkt fuer Saturns Ringe weiter unten */
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-image:
+      var(--planet-bild),
+      radial-gradient(
+        circle at 30% 25%,
+        color-mix(in srgb, var(--planet-color) 35%, #fff) 0%,
+        var(--planet-color) 45%,
+        color-mix(in srgb, var(--planet-color) 55%, #000) 100%
+      );
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    box-shadow:
+      inset -3px -3px 6px rgba(0, 0, 0, 0.45),
+      0 0 8px color-mix(in srgb, var(--planet-color) 45%, transparent);
+  }
+
+  /* Die grossen Ringe der Desktop-Kugel gehoeren hier nicht hin: sie sitzen
+     mittig ueber der ganzen (jetzt zeilenbreiten) Pille und liegen darum
+     quer ueber der Beschriftung. Das kleine Icon bringt weiter unten seine
+     eigenen, passend skalierten Ringe mit. */
+  .planet-nav__inner .nav-pill--saturn::before,
+  .planet-nav__inner .nav-pill--saturn::after {
+    display: none;
+  }
+
+  /* Saturns Ringe, herunterskaliert auf das kleine Icon — eigene Selektoren
+     (nicht .nav-pill--saturn::before/::after wie bei der grossen Kugel),
+     damit sie sich nicht mit deren Regeln in die Quere kommen (genau das
+     hat vorher dazu gefuehrt, dass Saturn bei "Navigation beschriftet"
+     unsichtbar wurde — die Kugel-Regel blendet ihr ::before dort aus). */
+  .planet-nav__inner .nav-pill--saturn .nav-pill__planet::before,
+  .planet-nav__inner .nav-pill--saturn .nav-pill__planet::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 15px;
+    transform: translate(-50%, -50%) rotate(-18deg);
+    border: 5px solid color-mix(in srgb, #6d6154 80%, #fff);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .planet-nav__inner .nav-pill--saturn .nav-pill__planet::before {
+    z-index: -1;
+    clip-path: inset(0 0 30% 0);
+  }
+
+  .planet-nav__inner .nav-pill--saturn .nav-pill__planet::after {
+    clip-path: inset(30% 0 0 0);
   }
 
   /* Hover/Tap färbt die Zeile in der Farbe ihres Planeten */
@@ -1656,16 +1804,8 @@ html { font-size: calc(16px * var(--text-scale)); }
     width: 100%;
     transform: none;
     border: 0;
-    border-left: 4px solid var(--planet-color);
     background: color-mix(in srgb, var(--planet-color) 20%, transparent);
     color: var(--planet-color);
-    padding-left: 24px;
-  }
-
-  /* Saturnringe gehören zur Kugel — im Listenmodus weg */
-  .planet-nav__inner .nav-pill--saturn::before,
-  .planet-nav__inner .nav-pill--saturn::after {
-    display: none;
   }
 }
 
@@ -1697,8 +1837,49 @@ html { font-size: calc(16px * var(--text-scale)); }
     gap: 24px;
   }
 
+  /* Reihenfolge unabhaengig vom Markup erzwingen: Titel, dann Daten,
+     das Foto ganz zum Schluss — nie mehr daneben, immer darunter. */
+  .steckbrief__title {
+    order: 1;
+  }
+
+  .steckbrief__daten {
+    order: 2;
+    /* dt/dd nebeneinander (max-content 1fr) braucht auf schmalen Handys oft
+       mehr Platz, als da ist — lieber dt ueber dd stapeln als quetschen. */
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+    column-gap: 0;
+  }
+
+  /* Luft zwischen den Eintraegen, aber nicht vor dem allerersten */
+  .steckbrief__daten dt {
+    margin-top: 10px;
+  }
+
+  .steckbrief__daten dt:first-child {
+    margin-top: 0;
+  }
+
   .steckbrief__foto {
+    order: 3;
+    width: 100%;
     max-width: 260px;
+    margin: 0 auto;
+  }
+
+  /* Bild rutscht unter den Text statt daneben */
+  .profil-abschnitt,
+  .profil-abschnitt--bild-rechts {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .profil-abschnitt__bild,
+  .profil-abschnitt--bild-rechts .profil-abschnitt__bild {
+    order: 2;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   .interesse {

@@ -9,6 +9,7 @@
  */
 import express from 'express'
 import fs from 'node:fs'
+import { ZipArchive } from 'archiver'
 
 import { nurAngemeldet } from '../sitzung.js'
 import path from 'node:path'
@@ -142,6 +143,14 @@ export const DOKUMENTE = [
     datei: 'kompetenznachweis-uek-6.pdf',
     bild: 'uek_335'
   },
+  {
+    id: 'kompetenznachweis-uek-7',
+    titel: 'Kompetenznachweis ÜK Modul 223',
+    kategorie: 'Zertifikate',
+    text: 'Überbetrieblicher Kurs, Bewertung und Rückmeldung.',
+    datei: 'kompetenznachweis-uek-7.pdf',
+    bild: 'uek_223'
+  },
 ]
 
 // Ab hier ist alles angemeldeten Besuchern vorbehalten.
@@ -159,6 +168,40 @@ router.get('/', (req, res) => {
     return { ...rest, hatBild: Boolean(bildDatei(dok)) }
   })
   res.json(liste)
+})
+
+/**
+ * GET /api/dokumente/alle/zip
+ *
+ * Alle Dokumente gebuendelt als ZIP — praktisch, wenn ein Unternehmen nicht
+ * jede Datei einzeln anklicken will. archiver haengt die Dateien direkt in
+ * die Response, das ZIP muss dafuer nie komplett im Speicher liegen.
+ *
+ * Route mit zwei Segmenten, damit sie nicht mit dem einsegmentigen '/:id'
+ * darunter kollidiert — 'alle' waere sonst selbst eine gueltige id.
+ */
+router.get('/alle/zip', (req, res) => {
+  res.attachment('Bewerbungsunterlagen-Thierry-Oesch.zip')
+
+  const archiv = new ZipArchive({ zlib: { level: 9 } })
+
+  archiv.on('error', (fehler) => {
+    console.error('ZIP-Erstellung fehlgeschlagen:', fehler)
+    if (!res.headersSent) res.status(500).json({ fehler: 'ZIP konnte nicht erstellt werden.' })
+  })
+
+  archiv.pipe(res)
+
+  for (const dok of DOKUMENTE) {
+    const pfad = path.join(DOKUMENTE_DIR, dok.datei)
+    if (!fs.existsSync(pfad)) {
+      console.error(`Datei fehlt, wird im ZIP uebersprungen: ${dok.datei}`)
+      continue
+    }
+    archiv.file(pfad, { name: `${dok.titel}.pdf` })
+  }
+
+  archiv.finalize()
 })
 
 /**
